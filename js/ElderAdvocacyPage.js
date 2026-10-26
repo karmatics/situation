@@ -27,17 +27,16 @@ class ElderAdvocacyPage {
         "standard elder care best practices."
       ].join("");
 
-      return makeElement("div", { className: "backstory-gradient-card p-8 md:p-10 mb-8" }, [
+      return makeElement("div", { className: "backstory-gradient-card p-8 md:p-10 mb-8", "data-block-id": "elder_intro_overview" }, [
         makeElement("h3", { className: "text-xl font-bold text-[var(--text-title)] mb-4" }, "Overview of Communication & Care Concerns"),
         makeElement("p", { className: "backstory-paragraph-highlight mb-4 text-base leading-relaxed" }, p1),
         makeElement("p", { className: "backstory-paragraph text-sm leading-relaxed text-[var(--text-secondary)]" }, p2)
       ]);
     }
 
-    
-
     buildElderAnalysisCard(title, text, badge) {
-      return makeElement("div", { className: "elder-analysis-card p-6 md:p-8" }, [
+      const safeId = title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+      return makeElement("div", { className: "elder-analysis-card p-6 md:p-8", "data-block-id": `legal_card_${safeId}` }, [
         makeElement("div", { className: "flex justify-between items-center mb-3" }, [
           makeElement("span", { className: "elder-card-badge" }, badge),
         ]),
@@ -45,7 +44,6 @@ class ElderAdvocacyPage {
         makeElement("p", { className: "text-sm text-[var(--text-secondary)] leading-relaxed" }, text)
       ]);
     }
-
     
 
     buildElderTranscriptsBlock(app) {
@@ -182,95 +180,94 @@ class ElderAdvocacyPage {
     }
 
   buildTechAchievementsAssessment(app) {
-      const introPara1 = [
-        "the details shared about this situation touch on several core principles ",
-        "of elder law, estate litigation, and fiduciary duty. While this does ",
-        "not constitute formal legal counsel, Rob's perspective on how a court ",
-        "might view his sister's actions aligns closely with established legal ",
-        "standards in Virginia."
-      ].join("");
+    const introPara1 = [
+      "the details shared about this situation touch on several core principles ",
+      "of elder law, estate litigation, and fiduciary duty. While this does ",
+      "not constitute formal legal counsel, Rob's perspective on how a court ",
+      "might view his sister's actions aligns closely with established legal ",
+      "standards in Virginia."
+    ].join("");
 
-      const introPara2 = [
-        "If this dispute were to reach a court, the specific points raised-the ",
-        "mother's stated wishes, the sister's punitive intent, and the withholding ",
-        "of Rob's professional achievements-would indeed form a highly credible ",
-        "argument for bad faith, breach of fiduciary duty, and undue influence."
-      ].join("");
+    const introPara2 = [
+      "If this dispute were to reach a court, the specific points raised-the ",
+      "mother's stated wishes, the sister's punitive intent, and the withholding ",
+      "of Rob's professional achievements-would indeed form a highly credible ",
+      "argument for bad faith, breach of fiduciary duty, and undue influence."
+    ].join("");
 
-      const points = [
-        this.buildTechAssessmentItem(
-          "1. Acting Contrary to the Mother's Stated Wishes (Breach of Duty)",
-          "Under the Virginia Uniform Power of Attorney Act (Va. Code § 64.2-1612), ",
-          [
-            "an agent acting under a power of attorney is legally required to act ",
-            "in good faith, in accordance with the principal's reasonable expectations, ",
-            "and solely in the principal's best interest. Overriding a competent ",
-            "elder's expressed wishes to isolate them is a direct indicator of bad faith."
-          ].join("")
-        ),
-        this.buildTechAssessmentItem(
-          "2. Punitive Intent and 'Undue Influence'",
-          "Undue influence ",
-          [
-            "occurs when someone in a position of trust overpowers a vulnerable ",
-            "person's independent judgment. Using a caregiving position to distort ",
-            "an elder's perception of a family member-specifically to induce the ",
-            "elder to cut them off financially or emotionally-is a classic ",
-            "example of undue influence."
-          ].join("")
-        ),
-        this.buildTechAssessmentItem(
-          "3. The Legal Relevance of Rob's Tech Achievements",
-          "Refuting a False Narrative: ",
-          [
-            "Rob's documented history of highly specialized, high-value work (including ",
-            "AccuDraw and Aardvark) proves that his career path in San Francisco ",
-            "is a rational, highly viable professional pursuit, refuting any ",
-            "characterizations of lack of effort. ",
-            "Withholding of Material Information: ",
-            "If a caretaker is deliberately hiding Rob's accomplishments to ",
-            "artificially manufacture a negative perception, a court may view ",
-            "this as bad-faith manipulation by omission."
-          ].join("")
-        ),
-        this.buildTechAssessmentItem(
-          "4. What a Court Requires to Move Forward",
-          "",
-          [
-            "Moving forward requires admissible evidence such as written ",
-            "communications showing punitive intent, interviews with the mother ",
-            "conducted by an independent court-appointed Guardian ad Litem to bypass ",
-            "any gatekeeping, and a formal petition for a complete fiduciary ",
-            "accounting of finances under POA control."
-          ].join("")
+    const points = [
+      this.buildTechAssessmentItem(
+        "1. Acting Contrary to the Mother's Stated Wishes (Breach of Duty)",
+        "Under the Virginia Uniform Power of Attorney Act (Va. Code § 64.2-1612), ",
+        [
+          "an agent acting under a power of attorney is legally required to act ",
+          "in good faith, in accordance with the principal's reasonable expectations, ",
+          "and solely in the principal's best interest. Overriding a competent ",
+          "elder's expressed wishes to isolate them is a direct indicator of bad faith."
+        ].join("")
+      ),
+      this.buildTechAssessmentItem(
+        "2. Punitive Intent and 'Undue Influence'",
+        "Undue influence ",
+        [
+          "occurs when someone in a position of trust overpowers a vulnerable ",
+          "person's independent judgment. Using a caregiving position to distort ",
+          "an elder's perception of a family member-specifically to induce the ",
+          "elder to cut them off financially or emotionally-is a classic ",
+          "example of undue influence."
+        ].join("")
+      ),
+      this.buildTechAssessmentItem(
+        "3. The Legal Relevance of Rob's Tech Achievements",
+        "Refuting a False Narrative: ",
+        [
+          "Rob's documented history of highly specialized, high-value work (including ",
+          "AccuDraw and Aardvark) proves that his career path in San Francisco ",
+          "is a rational, highly viable professional pursuit, refuting any ",
+          "characterizations of lack of effort. ",
+          "Withholding of Material Information: ",
+          "If a caretaker is deliberately hiding Rob's accomplishments to ",
+          "artificially manufacture a negative perception, a court may view ",
+          "this as bad-faith manipulation by omission."
+        ].join("")
+      ),
+      this.buildTechAssessmentItem(
+        "4. What a Court Requires to Move Forward",
+        "",
+        [
+          "Moving forward requires admissible evidence such as written ",
+          "communications showing punitive intent, interviews with the mother ",
+          "conducted by an independent court-appointed Guardian ad Litem to bypass ",
+          "any gatekeeping, and a formal petition for a complete fiduciary ",
+          "accounting of finances under POA control."
+        ].join("")
+      )
+    ];
+
+    return makeElement("section", { className: "cad-panel space-y-6 p-8 md:p-10 mt-8", "data-block-id": "tech_achievements_fiduciary_panel" }, [
+      makeElement("div", { className: "dashboard-header-group mb-6" }, [
+        makeElement("h3", { className: "text-lg font-bold text-[var(--text-title)]" }, "Technical Achievements & Fiduciary Impact Analysis"),
+        makeElement("p", { className: "text-sm text-[var(--text-secondary)] mt-1" }, 
+          "An assessment of how Rob Brown's documented innovations (AccuDraw & Aardvark) provide verifiable evidence of career validity."
         )
-      ];
+      ]),
 
-      return makeElement("section", { className: "cad-panel space-y-6 p-8 md:p-10 mt-8" }, [
-        makeElement("div", { className: "dashboard-header-group mb-6" }, [
-          makeElement("h3", { className: "text-lg font-bold text-[var(--text-title)]" }, "Technical Achievements & Fiduciary Impact Analysis"),
-          makeElement("p", { className: "text-sm text-[var(--text-secondary)] mt-1" }, 
-            "An assessment of how Rob Brown's documented innovations (AccuDraw & Aardvark) provide verifiable evidence of career validity."
-          )
+      makeElement("div", { className: "transcript-quote-box leading-relaxed text-sm text-[var(--text-primary)] space-y-4 p-6 md:p-8" }, [
+        makeElement("p", {}, [
+          makeElement("strong", {}, "From a legal standpoint, "),
+          introPara1
         ]),
-        
-        makeElement("div", { className: "transcript-quote-box leading-relaxed text-sm text-[var(--text-primary)] space-y-4 p-6 md:p-8" }, [
-          makeElement("p", {}, [
-            makeElement("strong", {}, "From a legal standpoint, "),
-            introPara1
-          ]),
-          makeElement("p", {}, introPara2),
-          
-          makeElement("div", { className: "border-t border-[var(--border-color)] pt-6 mt-6 space-y-6" }, ...points),
+        makeElement("p", {}, introPara2),
 
-          makeElement("p", { className: "font-bold text-[var(--text-title)] border-t border-[var(--border-color)] pt-6 mt-6" }, "Conclusion"),
-          makeElement("p", { className: "text-[var(--text-secondary)] italic leading-relaxed" }, 
-            "If the sister is isolating their mother, acting directly contrary to the mother's expressed wishes regarding family contact, and actively withholding information about Rob's professional status to paint him negatively, a Virginia court would likely view this as compelling evidence of a breach of fiduciary duty and undue influence."
-          )
-        ])
-      ]);
-    }
+        makeElement("div", { className: "border-t border-[var(--border-color)] pt-6 mt-6 space-y-6" }, ...points),
 
+        makeElement("p", { className: "font-bold text-[var(--text-title)] border-t border-[var(--border-color)] pt-6 mt-6" }, "Conclusion"),
+        makeElement("p", { className: "text-[var(--text-secondary)] italic leading-relaxed" }, 
+          "If the sister is isolating their mother, acting directly contrary to the mother's expressed wishes regarding family contact, and actively withholding information about Rob's professional status to paint him negatively, a Virginia court would likely view this as compelling evidence of a breach of fiduciary duty and undue influence."
+        )
+      ])
+    ]);
+  }
   getClaudeTranscriptTurns() {
       const r1 = [
         "I think I told my mom a little bit about this some time ago. I told her ",

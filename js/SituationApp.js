@@ -88,11 +88,11 @@ class SituationApp {
 
   renderApp() {
     this.targetElement.innerHTML = "";
-    
+
     const themeClass = this.currentTheme === "light" 
       ? "cad-container cad-grid-bg theme-light" 
       : "cad-container cad-grid-bg";
-    
+
     const appContainer = makeElement("div", { className: themeClass });
     appContainer.style.setProperty("--motion-scale", String(this.motionValue));
 
@@ -130,6 +130,16 @@ class SituationApp {
     appContainer.appendChild(innerWrapper);
     this.targetElement.appendChild(appContainer);
 
+    // Universal In-Situ Annotation and Block Decoration Bridge
+    if (typeof DocumentReader !== 'undefined' && typeof DocumentReader.decorateContainer === 'function') {
+      setTimeout(() => {
+        DocumentReader.decorateContainer(innerWrapper, {
+          dossierId: 'situation',
+          pageId: this.currentView
+        });
+      }, 0);
+    }
+
     if (this.currentView === "valuation" && this.resultsRevealed && !this._isAwaitingRecalculation()) {
       const emberValText = this.targetElement.querySelector(".glowing-consensus-value");
       if (emberValText) {
@@ -148,7 +158,6 @@ class SituationApp {
       this.valueEmberLogo = null;
     }
   }
-
   buildMinimalHeader() {
     const revealModeSelect = makeElement('select', {
       className: 'reveal-mode-select',
@@ -163,10 +172,39 @@ class SituationApp {
     ]);
     revealModeSelect.value = this.revealMode;
 
+    const ItemNotes = globalThis.DocumentItemNotes || globalThis.CadPlanItemNotes;
+    const DocEditor = globalThis.DocumentEditor || globalThis.CadPlanDocumentEditor;
+
+    const notesPromptBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#00f2fe', borderColor: '#00f2fe66' },
+      title: 'Compile all attached directives & notes into AI prompt or disk save',
+      onclick: () => {
+        if (ItemNotes && typeof ItemNotes.openPromptBuilderDialog === 'function') {
+          ItemNotes.openPromptBuilderDialog({ options: { dossierId: 'situation' } });
+        }
+      }
+    }, '⚡ Living Directives');
+
+    const revisionsBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#f59e0b', borderColor: '#f59e0b66' },
+      title: 'View all in-situ paragraph revisions & compile method patches',
+      onclick: () => {
+        if (DocEditor && typeof DocEditor.openRevisionManager === 'function') {
+          DocEditor.openRevisionManager(() => this.renderApp(), 'situation');
+        }
+      }
+    }, '✏️ Revisions');
+
     const controlsGroup = makeElement('div', {
       className: 'flex flex-col items-end gap-1'
     }, [
-      this.buildThemeToggle(),
+      makeElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'center' } }, [
+        notesPromptBtn,
+        revisionsBtn,
+        this.buildThemeToggle()
+      ]),
       makeElement('div', { className: 'reveal-mode-row' }, [revealModeSelect]),
       this.buildMotionSlider()
     ]);
@@ -196,7 +234,7 @@ class SituationApp {
         ]),
         controlsGroup
       ]),
-      
+
       makeElement('div', { className: 'title-group' }, [
         makeElement('h1', {}, headerTitle),
         makeElement('p', { className: 'title-subtitle' }, headerSubtitle)
@@ -206,10 +244,39 @@ class SituationApp {
   }
 
   buildElderHeader() {
+    const ItemNotes = globalThis.DocumentItemNotes || globalThis.CadPlanItemNotes;
+    const DocEditor = globalThis.DocumentEditor || globalThis.CadPlanDocumentEditor;
+
+    const notesPromptBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#00f2fe', borderColor: '#00f2fe66' },
+      title: 'Compile all attached directives & notes into AI prompt or disk save',
+      onclick: () => {
+        if (ItemNotes && typeof ItemNotes.openPromptBuilderDialog === 'function') {
+          ItemNotes.openPromptBuilderDialog({ options: { dossierId: 'situation' } });
+        }
+      }
+    }, '⚡ Living Directives');
+
+    const revisionsBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#f59e0b', borderColor: '#f59e0b66' },
+      title: 'View all in-situ paragraph revisions & compile method patches',
+      onclick: () => {
+        if (DocEditor && typeof DocEditor.openRevisionManager === 'function') {
+          DocEditor.openRevisionManager(() => this.renderApp(), 'situation');
+        }
+      }
+    }, '✏️ Revisions');
+
     return makeElement("header", { className: "minimal-header" }, [
       makeElement("div", { className: "header-top" }, [
         makeElement("span", { className: "tag-pill tag-pill-blue" }, "Elder Advocacy Review"),
-        this.buildThemeToggle()
+        makeElement("div", { style: { display: "flex", gap: "6px", alignItems: "center" } }, [
+          notesPromptBtn,
+          revisionsBtn,
+          this.buildThemeToggle()
+        ])
       ]),
       makeElement("div", { className: "title-group" }, [
         makeElement("h1", {}, "Care Arrangements & Family Communication Review"),
@@ -220,10 +287,39 @@ class SituationApp {
   }
 
   buildCaretakerHeader() {
+    const ItemNotes = globalThis.DocumentItemNotes || globalThis.CadPlanItemNotes;
+    const DocEditor = globalThis.DocumentEditor || globalThis.CadPlanDocumentEditor;
+
+    const notesPromptBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#00f2fe', borderColor: '#00f2fe66' },
+      title: 'Compile all attached directives & notes into AI prompt or disk save',
+      onclick: () => {
+        if (ItemNotes && typeof ItemNotes.openPromptBuilderDialog === 'function') {
+          ItemNotes.openPromptBuilderDialog({ options: { dossierId: 'situation' } });
+        }
+      }
+    }, '⚡ Living Directives');
+
+    const revisionsBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#f59e0b', borderColor: '#f59e0b66' },
+      title: 'View all in-situ paragraph revisions & compile method patches',
+      onclick: () => {
+        if (DocEditor && typeof DocEditor.openRevisionManager === 'function') {
+          DocEditor.openRevisionManager(() => this.renderApp(), 'situation');
+        }
+      }
+    }, '✏️ Revisions');
+
     return makeElement("header", { className: "minimal-header" }, [
       makeElement("div", { className: "header-top" }, [
         makeElement("span", { className: "tag-pill tag-pill-blue" }, "Caretaker Bias Review"),
-        this.buildThemeToggle()
+        makeElement("div", { style: { display: "flex", gap: "6px", alignItems: "center" } }, [
+          notesPromptBtn,
+          revisionsBtn,
+          this.buildThemeToggle()
+        ])
       ]),
       makeElement("div", { className: "title-group" }, [
         makeElement("h1", {}, "Caretaker Bias & LinkedIn Exhibits Review"),
@@ -232,7 +328,6 @@ class SituationApp {
       this.buildGlobalNavigation("caretaker-bias")
     ]);
   }
-
   buildGlobalNavigation(activeRoute) {
     return makeElement('div', { className: 'global-nav-bar' }, [
       makeElement('a', {

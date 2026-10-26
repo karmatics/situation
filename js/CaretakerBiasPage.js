@@ -30,13 +30,12 @@ class CaretakerBiasPage {
       "beliefs that justify demonizing close family members."
     ].join("");
 
-    return makeElement('div', { className: 'backstory-gradient-card' }, [
+    return makeElement('div', { className: 'backstory-gradient-card', 'data-block-id': 'caretaker_fiduciary_intro' }, [
       makeElement('h3', { className: 'text-lg font-bold text-[var(--text-title)]' }, 'Fiduciary Role & Objective of This Dossier'),
       makeElement('p', { className: 'backstory-paragraph-highlight' }, p1),
       makeElement('p', { className: 'backstory-paragraph' }, p2)
     ]);
   }
-
   buildCaretakerTimelineBlock(app) {
     const item1Text = "During a late-night discussion in Virginia regarding intellectual property economics, Kathy's husband Jack asserted: 'If it doesn\'t make you money, it doesn\'t have value.' Kathy became agitated and suddenly stated: 'We\'ve got a lot of guns and we\'re not afraid to use them.' Rob\'s query ('Is that a threat?') was met with complete silence as she walked out.";
     const item2Text = "Shortly after the Virginia incident, Rob discovered that Kathy had been publicly posting condescending and hostile comments on her professional LinkedIn profile. The realization that she was publicly denigrating his character combined with the active gun threat devastated Rob\'s emotional health and necessitated professional therapy.";
@@ -105,7 +104,8 @@ class CaretakerBiasPage {
   }
 
   buildExhibitItem(app, title, imgSrc, analysis, transcriptText) {
-    return makeElement('div', { className: 'exhibit-item-row' }, [
+    const safeId = title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
+    return makeElement('div', { className: 'exhibit-item-row', 'data-block-id': `exhibit_${safeId}` }, [
       makeElement('div', { className: 'exhibit-image-wrapper' }, [
         makeElement('img', {
           src: imgSrc,
@@ -125,7 +125,6 @@ class CaretakerBiasPage {
       ])
     ]);
   }
-
   buildVotingContrastPanel(app) {
     return makeElement('section', { className: 'cad-panel space-y-6' }, [
       makeElement('div', { className: 'dashboard-header-group' }, [
