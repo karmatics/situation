@@ -22,17 +22,16 @@ class CurrentWorkPage {
   }
 
   buildNarrativeCard() {
-    return makeElement("div", { className: "backstory-gradient-card" }, [
-      makeElement("h2", { className: "text-xl font-bold text-[var(--text-title)]" }, "Foundational Moats, Earning Potential, and Personal Horizons"),
-      makeElement("p", { className: "backstory-paragraph-highlight" }, 
-        "Building recursively self-improving Visual and Vibe Coding environments requires substantial stability, time, and focus. There is a stark, undeniable contrast between authoring core UX paradigms (such as AccuDraw and SmartLine) that historically created an estimated $2.3 billion in return on investment for major enterprise CAD vendors, and the disruptive personal dislocations of the recent past."
-      ),
-      makeElement("p", { className: "backstory-paragraph" }, 
-        "Unlike hourly development work, which is extremely vulnerable to rapid AI automation, this system is designed to generate passive income and a sustainable 15-year career runway through subscription software or establishing a modern online visual programming academy."
-      )
-    ]);
-  }
-
+      return makeElement("div", { className: "backstory-gradient-card", "data-block-id": "current_work_narrative" }, [
+        makeElement("h2", { className: "text-xl font-bold text-[var(--text-title)]" }, "Foundational Moats, Earning Potential, and Personal Horizons"),
+        makeElement("p", { "data-editable-text": "true", className: "backstory-paragraph-highlight" },
+          "Building recursively self-improving Visual and Vibe Coding environments requires substantial stability, time, and focus. There is a stark, undeniable contrast between authoring core UX paradigms (such as AccuDraw and SmartLine) that historically created an estimated $2.3 billion in return on investment for major enterprise CAD vendors, and the disruptive personal dislocations of the recent past."
+        ),
+        makeElement("p", { className: "backstory-paragraph" },
+          "Unlike hourly development work, which is extremely vulnerable to rapid AI automation, this system is designed to generate passive income and a sustainable 15-year career runway through subscription software or establishing a modern online visual programming academy."
+        )
+      ]);
+    }
   buildSystemHighlightsGrid() {
     const highlights = [
       { title: "Recursive System Generation", text: "The system writes, refactors, and deploys its own codebase in real-time using AST management client-side without relying on fragile server frameworks.", badge: "⚙️ Self-Improving Code" },

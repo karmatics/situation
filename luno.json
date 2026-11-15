@@ -1,7 +1,7 @@
 {
   "name": "MySituation",
-  "version": "1.3.1",
-  "description": "Executive career dossier, economic valuation assessment, and interactive exhibits",
+  "version": "2.1.1",
+  "description": "Personal situation dossier, court & daughter filing workspace, fiduciary record, and IP valuation assessment",
   "type": "luno-web-app",
   "mainClass": "SituationApp",
   "entrypoint": {
@@ -13,9 +13,9 @@
     "js/SituationApp.js",
     "js/SnareDrumAnimation.js",
     "js/ValueEmberLogo.js",
-    "js/QuoraPolarization.js",
     "js/AccuDrawValuation.js",
     "js/OverviewPage.js",
+    "js/CourtFilingPage.js",
     "js/AiPerspectivePage.js",
     "js/ElderAdvocacyPage.js",
     "js/CaretakerBiasPage.js",
@@ -27,13 +27,50 @@
     "UITools.js",
     "VideoPlayer.js",
     "DictationWidget.js",
-    "DocumentReader.js"
+    "DocumentReader.js",
+    "SidePanel.js",
+    "SupabaseCommentsAdapter.js",
+    "CadPlanDataRegistry.js",
+    "CadPlanItemNotes.js",
+    "CadPlanDocumentEditor.js",
+    "CadPlanAardvark.js"
   ],
   "styles": [],
-  "processedCountSinceCheckpoint": 0,
-  "changedMethods": {
-    "MySituation/js/OverviewPage.js": "2026-08-28T01:44:20.682Z"
-  },
-  "lastCheckpointTime": "2026-11-08T03:37:22.034Z",
-  "pendingCheckpointDescription": "Clean working tree"
+  "visibilitySets": {
+    "situation-core": [
+      "situation/js/SituationApp.js",
+      "situation/index.html",
+      "situation/luno.json"
+    ],
+    "overview-and-court": [
+      "situation/js/OverviewPage.js",
+      "situation/js/CourtFilingPage.js"
+    ],
+    "fiduciary-and-bias": [
+      "situation/js/ElderAdvocacyPage.js",
+      "situation/js/CaretakerBiasPage.js"
+    ],
+    "ai-and-current-work": [
+      "situation/js/AiPerspectivePage.js",
+      "situation/js/CurrentWorkPage.js"
+    ],
+    "valuation-and-fx": [
+      "situation/js/ValuationPage.js",
+      "situation/js/AccuDrawValuation.js",
+      "situation/js/SnareDrumAnimation.js",
+      "situation/js/ValueEmberLogo.js"
+    ],
+    "notes-inspector": [
+      "Library/CadPlanAardvark.js",
+      "Library/CadPlanItemNotes.js",
+      "Library/CadPlanDocumentEditor.js",
+      "Library/DocumentReader.js"
+    ],
+    "standalone-hosting": [
+      "situation/server.js",
+      "situation/deploy.js",
+      "situation/package.json",
+      "situation/DEPLOYMENT_GUIDE.md"
+    ]
+  }
 }

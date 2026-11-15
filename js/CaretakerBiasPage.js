@@ -36,25 +36,25 @@ class CaretakerBiasPage {
       makeElement('p', { className: 'backstory-paragraph' }, p2)
     ]);
   }
+
   buildCaretakerTimelineBlock(app) {
-    const item1Text = "During a late-night discussion in Virginia regarding intellectual property economics, Kathy's husband Jack asserted: 'If it doesn\'t make you money, it doesn\'t have value.' Kathy became agitated and suddenly stated: 'We\'ve got a lot of guns and we\'re not afraid to use them.' Rob\'s query ('Is that a threat?') was met with complete silence as she walked out.";
-    const item2Text = "Shortly after the Virginia incident, Rob discovered that Kathy had been publicly posting condescending and hostile comments on her professional LinkedIn profile. The realization that she was publicly denigrating his character combined with the active gun threat devastated Rob\'s emotional health and necessitated professional therapy.";
-    const item3Text = "Now acting as primary care coordinator and sole trust administrator, Kathy\'s long-standing grudge culminated in a complete communication firewall. Care supervisor Shirley confirmed she was under strict instructions to block any direct video contact between Rob and his mother unless explicitly cleared by Kathy, selectively isolating Rob while his sisters maintain unmonitored access.";
+      const item1Text = "During a late-night discussion in Virginia regarding intellectual property economics, Kathy's husband Jack asserted: 'If it doesn\'t make you money, it doesn\'t have value.' Kathy became agitated and suddenly stated: 'We\'ve got a lot of guns and we\'re not afraid to use them.' Rob\'s query ('Is that a threat?') was met with complete silence as she walked out.";
+      const item2Text = "Shortly after the Virginia incident, Rob discovered that Kathy had been publicly posting condescending and hostile comments on her professional LinkedIn profile. The realization that she was publicly denigrating his character combined with the active gun threat devastated Rob\'s emotional health and necessitated professional therapy.";
+      const item3Text = "Now acting as primary care coordinator and sole trust administrator, Kathy\'s long-standing grudge culminated in a complete communication firewall. Care supervisor Shirley confirmed she was under strict instructions to block any direct video contact between Rob and his mother unless explicitly cleared by Kathy, selectively isolating Rob while his sisters maintain unmonitored access.";
 
-    return makeElement('section', { className: 'cad-panel space-y-6' }, [
-      makeElement('h2', { 
-        className: 'text-xl font-bold text-[var(--text-title)] uppercase tracking-wide', 
-        style: { fontFamily: 'ui-monospace, monospace' } 
-      }, 'Timeline of the Gatekeeping Grudge'),
-      
-      makeElement('div', { className: 'timeline-flow space-y-6' }, [
-        this.buildTimelineItem('Early 2022 (The Virginia Threat)', item1Text, '🔴 The Gun Threat'),
-        this.buildTimelineItem('Early 2022 (Soon After / Discoveries)', item2Text, '💬 LinkedIn Discovery & Therapy'),
-        this.buildTimelineItem('Early 2026 (The Current Embargo)', item3Text, '🔒 Systemic Gatekeeping')
-      ])
-    ]);
-  }
+      return makeElement('section', { className: 'cad-panel space-y-6', 'data-block-id': 'caretaker_timeline' }, [
+        makeElement('h2', {
+          className: 'text-xl font-bold text-[var(--text-title)] uppercase tracking-wide',
+          style: { fontFamily: 'ui-monospace, monospace' }
+        }, 'Timeline of the Gatekeeping Grudge'),
 
+        makeElement('div', { className: 'timeline-flow space-y-6' }, [
+          this.buildTimelineItem('Early 2022 (The Virginia Threat)', item1Text, '🔴 The Gun Threat'),
+          this.buildTimelineItem('Early 2022 (Soon After / Discoveries)', item2Text, '💬 LinkedIn Discovery & Therapy'),
+          this.buildTimelineItem('Early 2026 (The Current Embargo)', item3Text, '🔒 Systemic Gatekeeping')
+        ])
+      ]);
+    }
   buildTimelineItem(time, desc, badge) {
     return makeElement('div', { className: 'timeline-item pl-6 relative' }, [
       makeElement('span', { className: 'timeline-item-dot' }),
@@ -125,58 +125,58 @@ class CaretakerBiasPage {
       ])
     ]);
   }
-  buildVotingContrastPanel(app) {
-    return makeElement('section', { className: 'cad-panel space-y-6' }, [
-      makeElement('div', { className: 'dashboard-header-group' }, [
-        makeElement('h3', {}, "Rob's Public Advocacy & Depolarization"),
-        makeElement('p', {}, "A direct contrast showcasing Rob's multi-year research into unifying median-based voting systems versus Kathy's explicit rejection of consensus.")
-      ]),
 
-      makeElement('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-6' }, [
-        makeElement('div', { className: 'elder-analysis-card p-6 border-l-4 border-emerald-500' }, [
-          makeElement('span', { className: 'elder-card-badge bg-emerald-950/20 text-emerald-400 border-emerald-500/20' }, "Rob's Depolarization Advocacy"),
-          makeElement('h4', { className: 'font-bold text-sm text-[var(--text-title)] my-2' }, 'Consensus & Majority Judgment Systems'),
-          makeElement('p', { className: 'text-xs text-[var(--text-secondary)] leading-relaxed italic' }, 
-            '"To reduce tribalism, we must replace standard plurality voting with median-based systems like Majority Judgment, where candidates are graded qualitatively. Extreme candidates receive polarized grades, so the system mathematically favors unifying centrist candidates."'
-          )
+  buildVotingContrastPanel(app) {
+      return makeElement('section', { className: 'cad-panel space-y-6', 'data-block-id': 'caretaker_voting_contrast' }, [
+        makeElement('div', { className: 'dashboard-header-group' }, [
+          makeElement('h3', {}, "Rob's Public Advocacy & Depolarization"),
+          makeElement('p', {}, "A direct contrast showcasing Rob's multi-year research into unifying median-based voting systems versus Kathy's explicit rejection of consensus.")
         ]),
 
-        makeElement('div', { className: 'elder-analysis-card p-6 border-l-4 border-red-500 flex flex-col justify-between' }, [
-          makeElement('div', {}, [
-            makeElement('span', { className: 'elder-card-badge bg-red-950/20 text-red-400 border-red-500/20' }, "Kathy's Polarizing Mandate"),
-            makeElement('h4', { className: 'font-bold text-sm text-[var(--text-title)] my-2' }, 'Rejection of the Median'),
-            makeElement('blockquote', { className: 'text-xs text-[var(--text-secondary)] leading-relaxed italic border-l border-red-500/30 pl-3 my-2' }, 
-              '"I find consensus-seeking offensive... I believe people in the median are some of the worst."'
+        makeElement('div', { className: 'grid grid-cols-1 md:grid-cols-2 gap-6' }, [
+          makeElement('div', { className: 'elder-analysis-card p-6 border-l-4 border-emerald-500' }, [
+            makeElement('span', { className: 'elder-card-badge bg-emerald-950/20 text-emerald-400 border-emerald-500/20' }, "Rob's Depolarization Advocacy"),
+            makeElement('h4', { className: 'font-bold text-sm text-[var(--text-title)] my-2' }, 'Consensus & Majority Judgment Systems'),
+            makeElement('p', { className: 'text-xs text-[var(--text-secondary)] leading-relaxed italic' },
+              '"To reduce tribalism, we must replace standard plurality voting with median-based systems like Majority Judgment, where candidates are graded qualitatively. Extreme candidates receive polarized grades, so the system mathematically favors unifying centrist candidates."'
             )
+          ]),
+
+          makeElement('div', { className: 'elder-analysis-card p-6 border-l-4 border-red-500 flex flex-col justify-between' }, [
+            makeElement('div', {}, [
+              makeElement('span', { className: 'elder-card-badge bg-red-950/20 text-red-400 border-red-500/20' }, "Kathy's Polarizing Mandate"),
+              makeElement('h4', { className: 'font-bold text-sm text-[var(--text-title)] my-2' }, 'Rejection of the Median'),
+              makeElement('blockquote', { className: 'text-xs text-[var(--text-secondary)] leading-relaxed italic border-l border-red-500/30 pl-3 my-2' },
+                '"I find consensus-seeking offensive... I believe people in the median are some of the worst."'
+              )
+            ])
           ])
         ])
-      ])
-    ]);
-  }
+      ]);
+    }
 
   buildCaretakerHistoryGrid(app) {
-    const historyCards = [
-      { title: 'Refusal to Support Mother (20 Years Ago)', text: 'When their mother experienced controlling behavior from their father, Rob proposed a unified sibling alliance. Kathy refused to assist, stating their mother brought the situation on herself.', badge: '❌ Refusal of Aid' },
-      { title: 'Refusal of Mediation in San Francisco', text: 'During a looming custody crisis, Rob asked Kathy (visiting SF) to spend one hour speaking with his then-wife to help mediate. Citing individual responsibility, she flatly refused, preceding a years-long custody dispute.', badge: '❌ Refusal of Mediation' },
-      { title: 'Refusal to Assist with Family Interference', text: 'When their late father was micromanaging Rob\'s legal defense during cognitive decline, Rob asked Kathy to intervene. She refused, stating: "If you accept help, it\'s going to have strings attached."', badge: '❌ Refusal of Protection' },
-      { title: 'Contrast: Rob\'s 2020 Defense of Kathy', text: 'When their uncle sent an abusive email slamming Kathy, Rob immediately wrote a strong defense of her at personal risk, showing loyalty she has consistently failed to return.', badge: '💚 Rob\'s Loyal Defense' }
-    ];
+      const historyCards = [
+        { title: 'Refusal to Support Mother (20 Years Ago)', text: 'When their mother experienced controlling behavior from their father, Rob proposed a unified sibling alliance. Kathy refused to assist, stating their mother brought the situation on herself.', badge: '❌ Refusal of Aid' },
+        { title: 'Refusal of Mediation in San Francisco', text: 'During a looming custody crisis, Rob asked Kathy (visiting SF) to spend one hour speaking with his then-wife to help mediate. Citing individual responsibility, she flatly refused, preceding a years-long custody dispute.', badge: '❌ Refusal of Mediation' },
+        { title: 'Refusal to Assist with Family Interference', text: 'When their late father was micromanaging Rob\'s legal defense during cognitive decline, Rob asked Kathy to intervene. She refused, stating: "If you accept help, it\'s going to have strings attached."', badge: '❌ Refusal of Protection' },
+        { title: 'Contrast: Rob\'s 2020 Defense of Kathy', text: 'When their uncle sent an abusive email slamming Kathy, Rob immediately wrote a strong defense of her at personal risk, showing loyalty she has consistently failed to return.', badge: '💚 Rob\'s Loyal Defense' }
+      ];
 
-    return makeElement('section', { className: 'cad-panel space-y-6' }, [
-      makeElement('h2', { 
-        className: 'text-xl font-bold text-[var(--text-title)] uppercase tracking-wide', 
-        style: { fontFamily: 'ui-monospace, monospace' } 
-      }, 'Historical Inconsistencies of "Self-Reliance"'),
-      makeElement('div', { className: 'elder-analysis-grid' }, 
-        historyCards.map(c => makeElement('div', { className: 'elder-analysis-card' }, [
-          makeElement('span', { className: 'elder-card-badge mb-2 inline-block' }, c.badge),
-          makeElement('h4', { className: 'text-base font-bold text-[var(--text-title)] mb-2' }, c.title),
-          makeElement('p', { className: 'text-sm text-[var(--text-secondary)] leading-relaxed' }, c.text)
-        ]))
-      )
-    ]);
-  }
-
+      return makeElement('section', { className: 'cad-panel space-y-6', 'data-block-id': 'caretaker_history_grid' }, [
+        makeElement('h2', {
+          className: 'text-xl font-bold text-[var(--text-title)] uppercase tracking-wide',
+          style: { fontFamily: 'ui-monospace, monospace' }
+        }, 'Historical Inconsistencies of "Self-Reliance"'),
+        makeElement('div', { className: 'elder-analysis-grid' },
+          historyCards.map(c => makeElement('div', { className: 'elder-analysis-card' }, [
+            makeElement('span', { className: 'elder-card-badge mb-2 inline-block' }, c.badge),
+            makeElement('h4', { className: 'text-base font-bold text-[var(--text-title)] mb-2' }, c.title),
+            makeElement('p', { className: 'text-sm text-[var(--text-secondary)] leading-relaxed' }, c.text)
+          ]))
+        )
+      ]);
+    }
   applyStyles() {
     applyCss(`
       .timeline-item {

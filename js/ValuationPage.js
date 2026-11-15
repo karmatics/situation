@@ -24,66 +24,65 @@ class ValuationPage {
     }
 
   buildBackstoryBlock(app) {
-    const p1 = [
-      'In 1994, I joined Bentley Systems and implemented two features ',
-      '- AccuDraw and SmartLine - that became the signature of their ',
-      'flagship product, MicroStation. Users still cite them thirty years ',
-      'later as the primary reason they stay on the platform. Bentley is ',
-      'now a $9 billion company. ',
-    ].join('');
+      const p1 = [
+        'In 1994, I joined Bentley Systems and implemented two features ',
+        '- AccuDraw and SmartLine - that became the signature of their ',
+        'flagship product, MicroStation. Users still cite them thirty years ',
+        'later as the primary reason they stay on the platform. Bentley is ',
+        'now a $9 billion company. ',
+      ].join('');
 
-    const p2 = [
-      'I had originally conceived and patented ',
-      'a similar idea at Intergraph - which at the time owned fifty percent of ',
-      "Bentley. When it became clear Intergraph wasn't going to act on it, I went ",
-      'directly to Bentley and rebuilt the concept from scratch, earning their ',
-      'first ever patent in the process.',   // todo: link to patent
-    ].join('');
+      const p2 = [
+        'I had originally conceived and patented ',
+        'a similar idea at Intergraph - which at the time owned fifty percent of ',
+        "Bentley. When it became clear Intergraph wasn't going to act on it, I went ",
+        'directly to Bentley and rebuilt the concept from scratch, earning their ',
+        'first ever patent in the process.',
+      ].join('');
 
-    const p3 = [
-      "I've always believed this contribution was significant. But 'significant' ",
-      'is easy to dismiss.',
-    ].join('');
+      const p3 = [
+        "I've always believed this contribution was significant. But 'significant' ",
+        'is easy to dismiss.',
+      ].join('');
 
-    const p4 = [
-      'So I asked four leading AI systems - Claude, Gemini, ChatGPT, and Grok - to ',
-      "assess the value independently. I was careful to not say we were talking about me, and otherwise encourage objectivity. I gave them ",
-      'the neutral facts and asked them to look at the history and do the math. They arrived at a consensus ',
-      "midpoint of a staggering portion of the company's 9-10 billion dollar valuation.",
-    ].join('');
+      const p4 = [
+        'So I asked four leading AI systems - Claude, Gemini, ChatGPT, and Grok - to ',
+        "assess the value independently. I was careful to not say we were talking about me, and otherwise encourage objectivity. I gave them ",
+        'the neutral facts and asked them to look at the history and do the math. They arrived at a consensus ',
+        "midpoint of a staggering portion of the company's 9-10 billion dollar valuation.",
+      ].join('');
 
-    const p5 = [
-      "You don't have to take my word for it. You can see the fuull output from each, linked below.  And, the prompts are right here. ",
-      'Paste them into any chatbot yourself, or modify them as you please.',
-    ].join('');
+      const p5 = [
+        "You don't have to take my word for it. You can see the full output from each, linked below. And, the prompts are right here. ",
+        'Paste them into any chatbot yourself, or modify them as you please.',
+      ].join('');
 
-    return makeElement('div', { className: 'backstory-gradient-card' }, [
-      makeElement('div', { className: 'space-y-4' }, [
-        makeElement('p', { className: 'backstory-paragraph-highlight' }, [
-          p1,
-          makeElement(
-            'a',
-            {
-              href: '#accudraw-innovations',  // todo:  youtube video popup
-              className: 'inline-link-highlight',
-              onclick: (e) => {
-                e.preventDefault();
-                const hashElement =
-                  document.getElementById('raw-prompts') || document.body;
-                hashElement.scrollIntoView({ behavior: 'smooth' });
+      return makeElement('div', { className: 'backstory-gradient-card', 'data-block-id': 'valuation_backstory' }, [
+        makeElement('div', { className: 'space-y-4' }, [
+          makeElement('p', { 'data-editable-text': 'true', className: 'backstory-paragraph-highlight' }, [
+            p1,
+            makeElement(
+              'a',
+              {
+                href: '#accudraw-innovations',
+                className: 'inline-link-highlight',
+                onclick: (e) => {
+                  e.preventDefault();
+                  const hashElement =
+                    document.getElementById('raw-prompts') || document.body;
+                  hashElement.scrollIntoView({ behavior: 'smooth' });
+                },
               },
-            },
-            'Learn more about AccuDraw: see it in motion, see my new version with all its Innovations, and see accolades from over the years ↗'
-          ),
+              'Learn more about AccuDraw: see it in motion, see my new version with all its Innovations, and see accolades from over the years ↗'
+            ),
+          ]),
         ]),
-      ]),
-      makeElement('p', { className: 'backstory-paragraph' }, p2),
-      makeElement('p', { className: 'backstory-paragraph' }, p3),
-      makeElement('p', { className: 'backstory-paragraph' }, p4),
-      makeElement('p', { className: 'backstory-paragraph-bold' }, p5),
-    ]);
-  }
-
+        makeElement('p', { className: 'backstory-paragraph' }, p2),
+        makeElement('p', { className: 'backstory-paragraph' }, p3),
+        makeElement('p', { className: 'backstory-paragraph' }, p4),
+        makeElement('p', { className: 'backstory-paragraph-bold' }, p5),
+      ]);
+    }
   buildRevealCTA(app) {
     const button = makeElement(
       'button',
@@ -111,102 +110,101 @@ class ValuationPage {
   }
 
   buildConsensusBlock(app) {
-    const wrongSequence = ['$2.3 Million', '$23 Million', '$230 Million'];
-    const finalValue = '$2.3 Billion';
+      const wrongSequence = ['$2.3 Million', '$23 Million', '$230 Million'];
+      const finalValue = '$2.3 Billion';
 
-    const stage = app.wrongAnswerStage || 0;
-    const isWrongState =
-      app.revealMode === 'wrong-answers' && stage < wrongSequence.length;
+      const stage = app.wrongAnswerStage || 0;
+      const isWrongState =
+        app.revealMode === 'wrong-answers' && stage < wrongSequence.length;
 
-    const displayValue = isWrongState ? wrongSequence[stage] : finalValue;
-    const isWrongOrCalc = isWrongState || app.isCalculating;
-    const valueClassName = `glowing-consensus-value${
-      isWrongOrCalc ? ' is-wrong' : ''
-    }`;
-
-    const figureChildren = [
-      makeElement(
-        'div',
-        { className: valueClassName },
-        app.isCalculating ? 'Calculating...' : displayValue
-      ),
-    ];
-
-    let actionNode;
-    if (isWrongState) {
-      const isBtnActive = app.showRecalculateButton && !app.isCalculating;
-      actionNode = makeElement(
-        'button',
-        {
-          className: `recalculate-btn ${
-            isBtnActive ? 'is-visible' : 'is-hidden'
-          }`,
-          onclick: () => app.advanceWrongAnswer(),
-        },
-        [
-          makeElement('span', { className: 'recalculate-icon' }, '✕'),
-          makeElement('span', {}, 'Incorrect answer - Recalculate'),
-        ]
-      );
-    } else {
-      const subtextText = app.justCorrected
-        ? '✓ Correct answer'
-        : 'Consensus Contributed Midpoint';
-      const subtextClass = `consensus-figure-subtext${
-        app.justCorrected ? ' flash-correct' : ''
+      const displayValue = isWrongState ? wrongSequence[stage] : finalValue;
+      const isWrongOrCalc = isWrongState || app.isCalculating;
+      const valueClassName = `glowing-consensus-value${
+        isWrongOrCalc ? ' is-wrong' : ''
       }`;
 
-      const bfnBtn = app.showBFNButton
-        ? makeElement(
-            'button',
-            {
-              className: 'visualize-bfn-btn animate-fade-in',
-              onclick: () => app.startBFNPlayback(),
-            },
-            [
-              makeElement('span', { className: 'play-pulse-icon' }, '▶'),
-              makeElement('span', {}, 'Visualize the B.F.N.'),
-            ]
-          )
-        : null;
+      const figureChildren = [
+        makeElement(
+          'div',
+          { className: valueClassName },
+          app.isCalculating ? 'Calculating...' : displayValue
+        ),
+      ];
 
-      actionNode = makeElement(
-        'div',
-        { className: 'consensus-action-wrapper' },
-        [makeElement('span', { className: subtextClass }, subtextText), bfnBtn]
+      let actionNode;
+      if (isWrongState) {
+        const isBtnActive = app.showRecalculateButton && !app.isCalculating;
+        actionNode = makeElement(
+          'button',
+          {
+            className: `recalculate-btn ${
+              isBtnActive ? 'is-visible' : 'is-hidden'
+            }`,
+            onclick: () => app.advanceWrongAnswer(),
+          },
+          [
+            makeElement('span', { className: 'recalculate-icon' }, '✕'),
+            makeElement('span', {}, 'Incorrect answer - Recalculate'),
+          ]
+        );
+      } else {
+        const subtextText = app.justCorrected
+          ? '✓ Correct answer'
+          : 'Consensus Contributed Midpoint';
+        const subtextClass = `consensus-figure-subtext${
+          app.justCorrected ? ' flash-correct' : ''
+        }`;
+
+        const bfnBtn = app.showBFNButton
+          ? makeElement(
+              'button',
+              {
+                className: 'visualize-bfn-btn animate-fade-in',
+                onclick: () => app.startBFNPlayback(),
+              },
+              [
+                makeElement('span', { className: 'play-pulse-icon' }, '▶'),
+                makeElement('span', {}, 'Visualize the B.F.N.'),
+              ]
+            )
+          : null;
+
+        actionNode = makeElement(
+          'div',
+          { className: 'consensus-action-wrapper' },
+          [makeElement('span', { className: subtextClass }, subtextText), bfnBtn]
+        );
+      }
+
+      figureChildren.push(
+        makeElement('div', { className: 'consensus-action-spacer' }, actionNode)
       );
+
+      return makeElement('div', { className: 'consensus-container', 'data-block-id': 'valuation_consensus' }, [
+        makeElement('div', { className: 'consensus-info-pane' }, [
+          makeElement(
+            'span',
+            { className: 'consensus-badge' },
+            'Consensus Composite Estimate'
+          ),
+          makeElement(
+            'h2',
+            { className: 'consensus-headline' },
+            'The Consolidated Valuation Footprint'
+          ),
+          makeElement(
+            'p',
+            { className: 'consensus-description' },
+            "By calculating the midpoint of each AI model's calculated range (Claude, Gemini, ChatGPT, and Grok), we arrive at a unified composite average of Bentley Systems enterprise valuation directly tied to the AccuDraw and SmartLine IP."
+          ),
+        ]),
+        makeElement(
+          'div',
+          { className: 'consensus-figure-pane' },
+          figureChildren
+        ),
+      ]);
     }
-
-    figureChildren.push(
-      makeElement('div', { className: 'consensus-action-spacer' }, actionNode)
-    );
-
-    return makeElement('div', { className: 'consensus-container' }, [
-      makeElement('div', { className: 'consensus-info-pane' }, [
-        makeElement(
-          'span',
-          { className: 'consensus-badge' },
-          'Consensus Composite Estimate'
-        ),
-        makeElement(
-          'h2',
-          { className: 'consensus-headline' },
-          'The Consolidated Valuation Footprint'
-        ),
-        makeElement(
-          'p',
-          { className: 'consensus-description' },
-          "By calculating the midpoint of each AI model's calculated range (Claude, Gemini, ChatGPT, and Grok), we arrive at a unified composite average of Bentley Systems enterprise valuation directly tied to the AccuDraw and SmartLine IP."
-        ),
-      ]),
-      makeElement(
-        'div',
-        { className: 'consensus-figure-pane' },
-        figureChildren
-      ),
-    ]);
-  }
-
   buildInteractiveSummaryGrid(app) {
     const container = makeElement('div', { className: 'cad-panel' }, [
       makeElement('div', { className: 'dashboard-header-group' }, [
@@ -260,60 +258,59 @@ class ValuationPage {
   }
 
   buildPromptsSection(app) {
-    const promptsWrapper = makeElement('div', { className: 'prompts-list' });
+      const promptsWrapper = makeElement('div', { className: 'prompts-list' });
 
-    app.data.prompts.forEach((p) => {
-      const item = makeElement('div', { className: 'prompt-card' }, [
-        makeElement('div', { className: 'prompt-content-wrapper' }, [
-          makeElement('span', { className: 'prompt-tag' }, `Prompt #${p.id}`),
-          makeElement('p', { className: 'prompt-body' }, `"${p.text}"`),
-        ]),
+      app.data.prompts.forEach((p) => {
+        const item = makeElement('div', { className: 'prompt-card' }, [
+          makeElement('div', { className: 'prompt-content-wrapper' }, [
+            makeElement('span', { className: 'prompt-tag' }, `Prompt #${p.id}`),
+            makeElement('p', { className: 'prompt-body' }, `"${p.text}"`),
+          ]),
+          makeElement(
+            'button',
+            {
+              className: 'copy-prompt-btn',
+              onclick: (e) => app.copyPromptText(p.text, e.currentTarget),
+            },
+            [
+              makeElement(
+                'svg',
+                {
+                  className: 'w-4 h-4',
+                  fill: 'none',
+                  stroke: 'currentColor',
+                  strokeWidth: '2',
+                  viewBox: '0 0 24 24',
+                },
+                [
+                  makeElement('path', {
+                    strokeLinecap: 'round',
+                    strokeLinejoin: 'round',
+                    d: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
+                  }),
+                ]
+              ),
+              makeElement('span', {}, 'Copy Prompt'),
+            ]
+          ),
+        ]);
+        promptsWrapper.appendChild(item);
+      });
+
+      return makeElement('section', { className: 'cad-panel', id: 'raw-prompts', 'data-block-id': 'valuation_prompts' }, [
         makeElement(
-          'button',
-          {
-            className: 'copy-prompt-btn',
-            onclick: (e) => app.copyPromptText(p.text, e.currentTarget),
-          },
-          [
-            makeElement(
-              'svg',
-              {
-                className: 'w-4 h-4',
-                fill: 'none',
-                stroke: 'currentColor',
-                strokeWidth: '2',
-                viewBox: '0 0 24 24',
-              },
-              [
-                makeElement('path', {
-                  strokeLinecap: 'round',
-                  strokeLinejoin: 'round',
-                  d: 'M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2',
-                }),
-              ]
-            ),
-            makeElement('span', {}, 'Copy Prompt'),
-          ]
+          'h2',
+          { className: 'text-xl font-bold text-[var(--text-title)]' },
+          'Run the Experiment Yourself'
         ),
+        makeElement(
+          'p',
+          { className: 'prompts-header-desc' },
+          'To show the objectivity of these evaluations, you can copy the exact historical prompts used to query the LLMs. Paste these into any AI chat application to see results generated without prior bias or context memory.'
+        ),
+        promptsWrapper,
       ]);
-      promptsWrapper.appendChild(item);
-    });
-
-    return makeElement('section', { className: 'cad-panel' }, [
-      makeElement(
-        'h2',
-        { className: 'text-xl font-bold text-[var(--text-title)]' },
-        'Run the Experiment Yourself'
-      ),
-      makeElement(
-        'p',
-        { className: 'prompts-header-desc' },
-        'To show the objectivity of these evaluations, you can copy the exact historical prompts used to query the LLMs. Paste these into any AI chat application to see results generated without prior bias or context memory.'
-      ),
-      promptsWrapper,
-    ]);
-  }
-
+    }
   buildTranscriptsBlock(app) {
       const tabFilterContainer = makeElement('div', { className: 'tab-filters' }, [
         this.buildFilterButton(app, 'all', 'Show All'),
@@ -1320,43 +1317,45 @@ class ValuationPage {
   }
 
   buildGeminiHigherEstimateSection(app) {
-      return makeElement('section', { className: 'cad-panel border-l-4 border-[#3b82f6] space-y-4 bg-blue-950/5 mt-8' }, [
-        makeElement('div', { className: 'dashboard-header-group' }, [
-          makeElement('h3', { className: 'text-lg font-bold text-[var(--text-title)] uppercase tracking-wide', style: { fontFamily: 'ui-monospace, monospace' } }, 'Alternative Gemini Querying & Higher Valuation'),
-          makeElement('p', { className: 'text-sm text-[var(--text-secondary)] mt-1' }, 
-            'An evaluation utilizing alternative phrasing regarding strategic locking mechanics, demonstrating how different analytical lenses reveal higher enterprise footprint scales.'
-          )
-        ]),
-        makeElement('p', { className: 'text-sm text-[var(--text-primary)] leading-relaxed' }, [
-          'When the underlying value assessment questions are posed to Gemini from a strategic ',
-          'ecosystem platform lock-in perspective, the calculations scale even higher, arriving at an estimated ',
-          makeElement('span', { className: 'highlight-range font-bold' }, '$4.5 Billion to $8.0 Billion'),
-          ' in long-term enterprise value contribution. This reflects the reality that compounding defensive barriers ',
-          'and user muscle memory generate substantial enterprise valuation premiums over several decades.'
-        ]),
-        makeElement('div', { className: 'pt-2' }, [
-          makeElement('a', {
-            href: 'https://gemini.google.com/',
-            target: '_blank',
-            rel: 'noopener noreferrer',
-            className: 'sidebar-link-btn inline-block',
-            style: {
-              color: '#3b82f6',
-              borderColor: 'rgba(59, 130, 246, 0.3)',
-              backgroundColor: 'rgba(59, 130, 246, 0.04)',
-              width: 'auto',
-              padding: '10px 20px',
-              borderRadius: '6px',
-              textDecoration: 'none',
-              fontSize: '11px',
-              fontWeight: 'bold',
-              fontFamily: 'ui-monospace, monospace'
-            }
-          }, 'View Higher Valuation Gemini Chat ↗')
-        ])
-      ]);
-    }
-
+        return makeElement('section', {
+          className: 'cad-panel border-l-4 border-[#3b82f6] space-y-4 bg-blue-950/5 mt-8',
+          'data-block-id': 'valuation_gemini_higher'
+        }, [
+          makeElement('div', { className: 'dashboard-header-group' }, [
+            makeElement('h3', { className: 'text-lg font-bold text-[var(--text-title)] uppercase tracking-wide', style: { fontFamily: 'ui-monospace, monospace' } }, 'Alternative Gemini Querying & Higher Valuation'),
+            makeElement('p', { className: 'text-sm text-[var(--text-secondary)] mt-1' },
+              'An evaluation utilizing alternative phrasing regarding strategic locking mechanics, demonstrating how different analytical lenses reveal higher enterprise footprint scales.'
+            )
+          ]),
+          makeElement('p', { 'data-editable-text': 'true', className: 'text-sm text-[var(--text-primary)] leading-relaxed' }, [
+            'When the underlying value assessment questions are posed to Gemini from a strategic ',
+            'ecosystem platform lock-in perspective, the calculations scale even higher, arriving at an estimated ',
+            makeElement('span', { className: 'highlight-range font-bold' }, '$4.5 Billion to $8.0 Billion'),
+            ' in long-term enterprise value contribution. This reflects the reality that compounding defensive barriers ',
+            'and user muscle memory generate substantial enterprise valuation premiums over several decades.'
+          ]),
+          makeElement('div', { className: 'pt-2' }, [
+            makeElement('a', {
+              href: 'https://gemini.google.com/',
+              target: '_blank',
+              rel: 'noopener noreferrer',
+              className: 'sidebar-link-btn inline-block',
+              style: {
+                color: '#3b82f6',
+                borderColor: 'rgba(59, 130, 246, 0.3)',
+                backgroundColor: 'rgba(59, 130, 246, 0.04)',
+                width: 'auto',
+                padding: '10px 20px',
+                borderRadius: '6px',
+                textDecoration: 'none',
+                fontSize: '11px',
+                fontWeight: 'bold',
+                fontFamily: 'ui-monospace, monospace'
+              }
+            }, 'View Higher Valuation Gemini Chat ↗')
+          ])
+        ]);
+      }
   buildModelTranscriptCard(app, model) {
       const cardStripe = makeElement('div', {
         className: 'transcript-card-stripe',

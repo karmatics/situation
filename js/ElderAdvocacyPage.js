@@ -341,30 +341,32 @@ class ElderAdvocacyPage {
     }
 
   buildClaudeAdvocacyCard(app) {
-      const card = makeElement("article", { className: "cad-panel transcript-detail-card p-8 md:p-10" }, [
-        makeElement("div", { className: "transcript-card-stripe", style: { backgroundColor: "#f59e0b" } })
-      ]);
+        const card = makeElement("article", {
+          className: "cad-panel transcript-detail-card p-8 md:p-10",
+          "data-block-id": "elder_claude_dialogue"
+        }, [
+          makeElement("div", { className: "transcript-card-stripe", style: { backgroundColor: "#f59e0b" } })
+        ]);
 
-      const authorGroup = makeElement("div", { className: "transcript-author-group mb-6" }, [
-        makeElement("span", { className: "transcript-author-circle", style: { backgroundColor: "#f59e0b" } }),
-        makeElement("h3", { className: "transcript-author-header" }, "Phase 1: Claude Advisory Dialogue")
-      ]);
+        const authorGroup = makeElement("div", { className: "transcript-author-group mb-6" }, [
+          makeElement("span", { className: "transcript-author-circle", style: { backgroundColor: "#f59e0b" } }),
+          makeElement("h3", { className: "transcript-author-header" }, "Phase 1: Claude Advisory Dialogue")
+        ]);
 
-      const turns = this.getClaudeTranscriptTurns();
-      const bubbleElements = turns.map(t => this.buildChatBubble(app, t.sender, t.label, t.text, t.msgId));
-      const flowWrapper = makeElement("div", { className: "conversation-flow" }, ...bubbleElements);
+        const turns = this.getClaudeTranscriptTurns();
+        const bubbleElements = turns.map(t => this.buildChatBubble(app, t.sender, t.label, t.text, t.msgId));
+        const flowWrapper = makeElement("div", { className: "conversation-flow" }, ...bubbleElements);
 
-      const cardInner = makeElement("div", { className: "transcript-card-inner" }, [
-        makeElement("div", { className: "transcript-card-main" }, [
-          authorGroup,
-          flowWrapper
-        ])
-      ]);
+        const cardInner = makeElement("div", { className: "transcript-card-inner" }, [
+          makeElement("div", { className: "transcript-card-main" }, [
+            authorGroup,
+            flowWrapper
+          ])
+        ]);
 
-      card.appendChild(cardInner);
-      return card;
-    }
-
+        card.appendChild(cardInner);
+        return card;
+      }
   getGeminiTranscriptTurns() {
       const g1 = [
         "The situation described is highly complex, combining severe personal ",
@@ -445,30 +447,32 @@ class ElderAdvocacyPage {
     }
 
   buildGeminiAdvocacyCard(app) {
-      const card = makeElement("article", { className: "cad-panel transcript-detail-card p-8 md:p-10" }, [
-        makeElement("div", { className: "transcript-card-stripe", style: { backgroundColor: "#3b82f6" } })
-      ]);
+        const card = makeElement("article", {
+          className: "cad-panel transcript-detail-card p-8 md:p-10",
+          "data-block-id": "elder_gemini_dialogue"
+        }, [
+          makeElement("div", { className: "transcript-card-stripe", style: { backgroundColor: "#3b82f6" } })
+        ]);
 
-      const authorGroup = makeElement("div", { className: "transcript-author-group mb-6" }, [
-        makeElement("span", { className: "transcript-author-circle", style: { backgroundColor: "#3b82f6" } }),
-        makeElement("h3", { className: "transcript-author-header" }, "Phase 2: Gemini Objective Legal Consultation")
-      ]);
+        const authorGroup = makeElement("div", { className: "transcript-author-group mb-6" }, [
+          makeElement("span", { className: "transcript-author-circle", style: { backgroundColor: "#3b82f6" } }),
+          makeElement("h3", { className: "transcript-author-header" }, "Phase 2: Gemini Objective Legal Consultation")
+        ]);
 
-      const turns = this.getGeminiTranscriptTurns();
-      const bubbleElements = turns.map(t => this.buildChatBubble(app, t.sender, t.label, t.text, t.msgId));
-      const flowWrapper = makeElement("div", { className: "conversation-flow" }, ...bubbleElements);
+        const turns = this.getGeminiTranscriptTurns();
+        const bubbleElements = turns.map(t => this.buildChatBubble(app, t.sender, t.label, t.text, t.msgId));
+        const flowWrapper = makeElement("div", { className: "conversation-flow" }, ...bubbleElements);
 
-      const cardInner = makeElement("div", { className: "transcript-card-inner" }, [
-        makeElement("div", { className: "transcript-card-main" }, [
-          authorGroup,
-          flowWrapper
-        ])
-      ]);
+        const cardInner = makeElement("div", { className: "transcript-card-inner" }, [
+          makeElement("div", { className: "transcript-card-main" }, [
+            authorGroup,
+            flowWrapper
+          ])
+        ]);
 
-      card.appendChild(cardInner);
-      return card;
-    }
-
+        card.appendChild(cardInner);
+        return card;
+      }
   applyStyles() {
       this.applyElderLayoutCSS();
       this.applyElderTranscriptCSS();

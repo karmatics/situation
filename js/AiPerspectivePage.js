@@ -9,17 +9,16 @@ class AiPerspectivePage {
   }
 
   buildContextCard() {
-    return makeElement('div', { className: 'backstory-gradient-card' }, [
-      makeElement('h3', { className: 'text-xl font-bold text-[var(--text-title)]' }, 'The Core Thesis: Automation Timing & Career Recovery'),
-      makeElement('p', { className: 'backstory-paragraph-highlight' }, 
-        "The speed AI is moving at has created an extremely narrow window to get things sorted out career-wise. The common advice to 'just take any low-level survival job now and rebuild your career later' is completely blind to the actual trajectory. Spending a year digging ditches or doing menial labor at this critical juncture means missing the boat entirely on the generative transition. By the time you try to return, standard coding and interface modeling will be fully automated, shutting the door on my visual systems engineering skills for good."
-      ),
-      makeElement('p', { className: 'backstory-paragraph' }, 
-        "With technology changing faster than at any point in human history, the opportunity cost of forced professional exile is absolute. Below is an analytical essay detailing the sheer velocity of generative graphics, spatial models, and robotics, and why establishing an immediate, focused technical runway is a matter of urgent survival."
-      )
-    ]);
-  }
-
+      return makeElement('div', { className: 'backstory-gradient-card', 'data-block-id': 'ai_automation_thesis' }, [
+        makeElement('h3', { className: 'text-xl font-bold text-[var(--text-title)]' }, 'The Core Thesis: Automation Timing & Career Recovery'),
+        makeElement('p', { 'data-editable-text': 'true', className: 'backstory-paragraph-highlight' },
+          "The speed AI is moving at has created an extremely narrow window to get things sorted out career-wise. The common advice to 'just take any low-level survival job now and rebuild your career later' is completely blind to the actual trajectory. Spending a year digging ditches or doing menial labor at this critical juncture means missing the boat entirely on the generative transition. By the time you try to return, standard coding and interface modeling will be fully automated, shutting the door on my visual systems engineering skills for good."
+        ),
+        makeElement('p', { className: 'backstory-paragraph' },
+          "With technology changing faster than at any point in human history, the opportunity cost of forced professional exile is absolute. Below is an analytical essay detailing the sheer velocity of generative graphics, spatial models, and robotics, and why establishing an immediate, focused technical runway is a matter of urgent survival."
+        )
+      ]);
+    }
   buildQuoraPost() {
     return makeElement('article', { className: 'quora-post-card' }, [
       makeElement('h1', { className: 'quora-question-title' }, 'Do you believe AI will replace most all professions?'),
