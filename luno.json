@@ -20,7 +20,8 @@
     "js/ElderAdvocacyPage.js",
     "js/CaretakerBiasPage.js",
     "js/CurrentWorkPage.js",
-    "js/ValuationPage.js"
+    "js/ValuationPage.js",
+    "js/SituationSummaries.js"
   ],
   "library": [
     "DomBasics.js",
@@ -33,7 +34,8 @@
     "CadPlanDataRegistry.js",
     "CadPlanItemNotes.js",
     "CadPlanDocumentEditor.js",
-    "CadPlanAardvark.js"
+    "CadPlanAardvark.js",
+    "SensitiveContextGate.js"
   ],
   "styles": [],
   "visibilitySets": {
@@ -71,6 +73,10 @@
       "situation/deploy.js",
       "situation/package.json",
       "situation/DEPLOYMENT_GUIDE.md"
+    ],
+    "summaries-only": [
+      "situation/js/SituationSummaries.js",
+      "situation/luno.json"
     ]
   }
 }

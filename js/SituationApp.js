@@ -137,169 +137,135 @@ class SituationApp {
       }
 
   renderApp() {
-        this.targetElement.innerHTML = "";
+    this.targetElement.innerHTML = '';
+    const themeClass = this.currentTheme === 'light' ? 'cad-container cad-grid-bg theme-light' : 'cad-container cad-grid-bg';
+    const appContainer = makeElement('div', { className: themeClass });
+    appContainer.style.setProperty('--motion-scale', String(this.motionValue));
 
-        const themeClass = this.currentTheme === "light"
-          ? "cad-container cad-grid-bg theme-light"
-          : "cad-container cad-grid-bg";
+    const innerWrapper = makeElement('div', {
+      className: 'cad-wrapper', 'data-dossier': 'situation', 'data-page-id': this.currentView
+    });
 
-        const appContainer = makeElement("div", { className: themeClass });
-        appContainer.style.setProperty("--motion-scale", String(this.motionValue));
+    if (this.currentView === 'elder-advocacy') innerWrapper.appendChild(this.buildElderHeader());
+    else if (this.currentView === 'caretaker-bias') innerWrapper.appendChild(this.buildCaretakerHeader());
+    else innerWrapper.appendChild(this.buildMinimalHeader());
 
-        const innerWrapper = makeElement("div", {
-          className: "cad-wrapper",
-          'data-dossier': 'situation',
-          'data-page-id': this.currentView
+    const summaryCard = this._renderSummaryCard();
+    if (summaryCard) innerWrapper.appendChild(summaryCard);
+
+    let page = null;
+    if (this.currentView === 'court-filing' && typeof CourtFilingPage !== 'undefined') page = new CourtFilingPage();
+    else if (this.currentView === 'overview') page = new OverviewPage();
+    else if (this.currentView === 'ai-perspective') page = new AiPerspectivePage();
+    else if (this.currentView === 'elder-advocacy') page = new ElderAdvocacyPage();
+    else if (this.currentView === 'caretaker-bias') page = new CaretakerBiasPage();
+    else if (this.currentView === 'current-work') page = new CurrentWorkPage();
+    else page = new ValuationPage();
+
+    innerWrapper.appendChild(page.render(this));
+    innerWrapper.appendChild(this.buildFooter());
+    appContainer.appendChild(innerWrapper);
+    this.targetElement.appendChild(appContainer);
+
+    if (typeof DocumentReader !== 'undefined' && typeof DocumentReader.decorateContainer === 'function') {
+      setTimeout(() => {
+        DocumentReader.decorateContainer(innerWrapper, { dossierId: 'situation', pageId: this.currentView });
+        if (this._pendingScrollBlockId) {
+          const targetId = this._pendingScrollBlockId;
+          this._pendingScrollBlockId = null;
+          const targetEl = innerWrapper.querySelector(`[data-block-id="${targetId}"], [data-block="${targetId}"]`) || document.getElementById(targetId);
+          if (targetEl) {
+            targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            targetEl.style.transition = 'box-shadow 0.3s ease';
+            targetEl.style.boxShadow = '0 0 0 2px #00f2fe, 0 0 24px rgba(0, 242, 254, 0.45)';
+            setTimeout(() => { targetEl.style.boxShadow = ''; }, 2400);
+          }
+        }
+      }, 0);
+    }
+
+    if (this.currentView === 'valuation' && this.resultsRevealed && !this._isAwaitingRecalculation()) {
+      const emberValText = this.targetElement.querySelector('.glowing-consensus-value');
+      if (emberValText) {
+        if (this.valueEmberLogo) this.valueEmberLogo.destroy();
+        this.valueEmberLogo = new ValueEmberLogo(emberValText, {
+          isAwake: true, emberCountMultiplier: 0.4 * this.motionValue,
+          emberSpeedMultiplier: 0.3 * this.motionValue, emberSizeMultiplier: 0.4 * this.motionValue
         });
-
-        if (this.currentView === "elder-advocacy") {
-          innerWrapper.appendChild(this.buildElderHeader());
-        } else if (this.currentView === "caretaker-bias") {
-          innerWrapper.appendChild(this.buildCaretakerHeader());
-        } else {
-          innerWrapper.appendChild(this.buildMinimalHeader());
-        }
-
-        if (this.currentView === "court-filing" && typeof CourtFilingPage !== 'undefined') {
-          const page = new CourtFilingPage();
-          innerWrapper.appendChild(page.render(this));
-        } else if (this.currentView === "overview") {
-          const page = new OverviewPage();
-          innerWrapper.appendChild(page.render(this));
-        } else if (this.currentView === "ai-perspective") {
-          const page = new AiPerspectivePage();
-          innerWrapper.appendChild(page.render(this));
-        } else if (this.currentView === "elder-advocacy") {
-          const page = new ElderAdvocacyPage();
-          innerWrapper.appendChild(page.render(this));
-        } else if (this.currentView === "caretaker-bias") {
-          const page = new CaretakerBiasPage();
-          innerWrapper.appendChild(page.render(this));
-        } else if (this.currentView === "current-work") {
-          const page = new CurrentWorkPage();
-          innerWrapper.appendChild(page.render(this));
-        } else {
-          const page = new ValuationPage();
-          innerWrapper.appendChild(page.render(this));
-        }
-
-        innerWrapper.appendChild(this.buildFooter());
-        appContainer.appendChild(innerWrapper);
-        this.targetElement.appendChild(appContainer);
-
-        if (typeof DocumentReader !== 'undefined' && typeof DocumentReader.decorateContainer === 'function') {
-          setTimeout(() => {
-            DocumentReader.decorateContainer(innerWrapper, {
-              dossierId: 'situation',
-              pageId: this.currentView
-            });
-
-            if (this._pendingScrollBlockId) {
-              const targetId = this._pendingScrollBlockId;
-              this._pendingScrollBlockId = null;
-              const targetEl = innerWrapper.querySelector(`[data-block-id="${targetId}"], [data-block="${targetId}"]`) ||
-                               document.getElementById(targetId);
-              if (targetEl) {
-                targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                targetEl.style.transition = 'box-shadow 0.3s ease';
-                targetEl.style.boxShadow = '0 0 0 2px #00f2fe, 0 0 24px rgba(0, 242, 254, 0.45)';
-                setTimeout(() => { targetEl.style.boxShadow = ''; }, 2400);
-              }
-            }
-          }, 0);
-        }
-
-        if (this.currentView === "valuation" && this.resultsRevealed && !this._isAwaitingRecalculation()) {
-          const emberValText = this.targetElement.querySelector(".glowing-consensus-value");
-          if (emberValText) {
-            if (this.valueEmberLogo) {
-              this.valueEmberLogo.destroy();
-            }
-            this.valueEmberLogo = new ValueEmberLogo(emberValText, {
-              isAwake: true,
-              emberCountMultiplier: 0.4 * this.motionValue,
-              emberSpeedMultiplier: 0.3 * this.motionValue,
-              emberSizeMultiplier: 0.4 * this.motionValue
-            });
-          }
-        } else if (this.valueEmberLogo) {
-          this.valueEmberLogo.destroy();
-          this.valueEmberLogo = null;
-        }
       }
-
+    } else if (this.valueEmberLogo) {
+      this.valueEmberLogo.destroy();
+      this.valueEmberLogo = null;
+    }
+  }
   buildMinimalHeader() {
-        const revealModeSelect = makeElement('select', {
-          className: 'reveal-mode-select',
-          onchange: (e) => {
-            this.revealMode = e.target.value;
-            localStorage.setItem('accudraw-reveal-mode', this.revealMode);
-          }
-        }, [
-          makeElement('option', { value: 'drum-roll' }, 'Drum Roll'),
-          makeElement('option', { value: 'no-drama' }, 'No Drama'),
-          makeElement('option', { value: 'wrong-answers' }, 'Wrong Answers')
-        ]);
-        revealModeSelect.value = this.revealMode;
-
-        const controlsGroup = makeElement('div', {
-          className: 'flex flex-col items-end gap-1'
-        }, [
-          makeElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' } }, this._buildLivingToolButtons()),
-          this.currentView === 'valuation' ? makeElement('div', { className: 'reveal-mode-row' }, [revealModeSelect]) : null,
-          this.currentView === 'valuation' ? this.buildMotionSlider() : null
-        ].filter(Boolean));
-
-        let headerTitle = 'Career Dossier & Valuation Assessment';
-        let headerSubtitle = 'A comprehensive situational analysis and economic timeline';
-
-        if (this.currentView === 'court-filing') {
-          headerTitle = 'Daughter & Court Filing Workspace';
-          headerSubtitle = 'Current stability record, parenting chronology, and structured evidence for filing';
-        } else if (this.currentView === 'overview') {
-          headerTitle = 'Executive Summary & Current Status';
-          headerSubtitle = 'Updated November 2026 stability, priorities, and technical timeline';
-        } else if (this.currentView === 'ai-perspective') {
-          headerTitle = 'AI Automation & Urgent Career Timeline';
-          headerSubtitle = 'The exponential pace of automation and professional time pressure';
-        } else if (this.currentView === 'current-work') {
-          headerTitle = 'Current Work & Vibe Coding Environment';
-          headerSubtitle = 'Next-generation recursively self-improving visual code environments';
-        } else if (this.currentView === 'valuation') {
-          headerTitle = 'AccuDraw & SmartLine Value Assessment';
-          headerSubtitle = 'A comparative analysis of enterprise value contribution';
-        }
-
-        return makeElement('header', { className: 'minimal-header' }, [
-          makeElement('div', { className: 'header-top' }, [
-            makeElement('div', { className: 'tags-wrapper' }, [
-              makeElement('span', { className: 'tag-pill tag-pill-blue' }, 'Portfolio & Dossier'),
-              makeElement('span', { className: 'tag-pill tag-pill-slate' }, '1994 - Nov 2026')
-            ]),
-            controlsGroup
-          ]),
-          makeElement('div', { className: 'title-group' }, [
-            makeElement('h1', {}, headerTitle),
-            makeElement('p', { className: 'title-subtitle' }, headerSubtitle)
-          ]),
-          this.buildGlobalNavigation(this.currentView)
-        ]);
+    const revealModeSelect = makeElement('select', {
+      className: 'reveal-mode-select',
+      onchange: (e) => {
+        this.revealMode = e.target.value;
+        localStorage.setItem('accudraw-reveal-mode', this.revealMode);
       }
+    }, [
+      makeElement('option', { value: 'drum-roll' }, 'Drum Roll'),
+      makeElement('option', { value: 'no-drama' }, 'No Drama'),
+      makeElement('option', { value: 'wrong-answers' }, 'Wrong Answers')
+    ]);
+    revealModeSelect.value = this.revealMode;
+
+    const controlsGroup = makeElement('div', { className: 'flex flex-col items-end gap-1' }, [
+      makeElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' } }, this._buildEnhancedLivingTools()),
+      this.currentView === 'valuation' ? makeElement('div', { className: 'reveal-mode-row' }, [revealModeSelect]) : null,
+      this.currentView === 'valuation' ? this.buildMotionSlider() : null
+    ].filter(Boolean));
+
+    let headerTitle = 'Career Dossier & Valuation Assessment';
+    let headerSubtitle = 'A comprehensive situational analysis and economic timeline';
+    if (this.currentView === 'court-filing') {
+      headerTitle = 'Daughter & Court Filing Workspace';
+      headerSubtitle = 'Current stability record, parenting chronology, and structured evidence for filing';
+    } else if (this.currentView === 'overview') {
+      headerTitle = 'Executive Summary & Current Status';
+      headerSubtitle = 'Updated November 2026 stability, priorities, and technical timeline';
+    } else if (this.currentView === 'ai-perspective') {
+      headerTitle = 'AI Automation & Urgent Career Timeline';
+      headerSubtitle = 'The exponential pace of automation and professional time pressure';
+    } else if (this.currentView === 'current-work') {
+      headerTitle = 'Current Work & Vibe Coding Environment';
+      headerSubtitle = 'Next-generation recursively self-improving visual code environments';
+    } else if (this.currentView === 'valuation') {
+      headerTitle = 'AccuDraw & SmartLine Value Assessment';
+      headerSubtitle = 'A comparative analysis of enterprise value contribution';
+    }
+
+    return makeElement('header', { className: 'minimal-header' }, [
+      makeElement('div', { className: 'header-top' }, [
+        makeElement('div', { className: 'tags-wrapper' }, [
+          makeElement('span', { className: 'tag-pill tag-pill-blue' }, 'Portfolio & Dossier'),
+          makeElement('span', { className: 'tag-pill tag-pill-slate' }, '1994 - Nov 2026')
+        ]),
+        controlsGroup
+      ]),
+      makeElement('div', { className: 'title-group' }, [
+        makeElement('h1', {}, headerTitle),
+        makeElement('p', { className: 'title-subtitle' }, headerSubtitle)
+      ]),
+      this.buildGlobalNavigation(this.currentView)
+    ]);
+  }
 
   buildElderHeader() {
-        return makeElement("header", { className: "minimal-header" }, [
-          makeElement("div", { className: "header-top" }, [
-            makeElement("span", { className: "tag-pill tag-pill-blue" }, "Elder Advocacy Review"),
-            makeElement("div", { style: { display: "flex", gap: "6px", alignItems: "center", flexWrap: "wrap" } }, this._buildLivingToolButtons())
-          ]),
-          makeElement("div", { className: "title-group" }, [
-            makeElement("h1", {}, "Care Arrangements & Family Communication Review"),
-            makeElement("p", { className: "title-subtitle" }, "A factual analysis of Power of Attorney limits and visitation guidelines")
-          ]),
-          this.buildGlobalNavigation("elder-advocacy")
-        ]);
-      }
-
+    return makeElement('header', { className: 'minimal-header' }, [
+      makeElement('div', { className: 'header-top' }, [
+        makeElement('span', { className: 'tag-pill tag-pill-blue' }, 'Elder Advocacy Review'),
+        makeElement('div', { style: { display: 'flex', gap: '6px', alignItems: 'center', flexWrap: 'wrap' } }, this._buildEnhancedLivingTools())
+      ]),
+      makeElement('div', { className: 'title-group' }, [
+        makeElement('h1', {}, 'Care Arrangements & Family Communication Review'),
+        makeElement('p', { className: 'title-subtitle' }, 'A factual analysis of Power of Attorney limits and visitation guidelines')
+      ]),
+      this.buildGlobalNavigation('elder-advocacy')
+    ]);
+  }
   buildCaretakerHeader() {
         return makeElement("header", { className: "minimal-header" }, [
           makeElement("div", { className: "header-top" }, [
@@ -1022,6 +988,57 @@ class SituationApp {
 
         return [notesPromptBtn, revisionsBtn, exportMdBtn, aardvarkBtn, this.buildThemeToggle()];
       }
+
+  _buildEnhancedLivingTools() {
+    const baseBtns = this._buildLivingToolButtons();
+    const clipNotesBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      'data-aardvark-ignore': 'true',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#10b981', borderColor: '#10b98166' },
+      title: 'Copy all attached notes + document references directly to clipboard',
+      onclick: (e) => {
+        if (typeof DocumentReader !== 'undefined' && typeof DocumentReader.copyContainerNotesBundle === 'function') {
+          DocumentReader.copyContainerNotesBundle({ dossierId: 'situation' }, e.currentTarget);
+        }
+      }
+    }, '📋 Clip Notes');
+
+    const summariesBtn = makeElement('button', {
+      className: 'dr-nav-btn',
+      'data-aardvark-ignore': 'true',
+      style: { padding: '4px 10px', fontSize: '11px', fontWeight: 'bold', color: '#a3e635', borderColor: '#a3e63566' },
+      title: 'Copy Tier-0 executive summaries of all Situation views to clipboard',
+      onclick: (e) => {
+        if (typeof SituationSummaries !== 'undefined' && navigator.clipboard?.writeText) {
+          const btn = e.currentTarget;
+          navigator.clipboard.writeText(SituationSummaries.toMarkdown()).then(() => {
+            const orig = btn.textContent;
+            btn.textContent = '✓ Copied!';
+            setTimeout(() => { btn.textContent = orig; }, 1800);
+          });
+        }
+      }
+    }, '🧭 Summaries');
+
+    return [...baseBtns, clipNotesBtn, summariesBtn];
+  }
+
+  _renderSummaryCard() {
+    const sum = (typeof SituationSummaries !== 'undefined') ? SituationSummaries.get(this.currentView) : null;
+    if (!sum) return null;
+    return makeElement('div', {
+      'data-block-id': `summary_${this.currentView}`,
+      style: {
+        margin: '0 0 20px 0', padding: '12px 16px', borderRadius: '0 10px 10px 0',
+        background: 'rgba(0, 242, 254, 0.05)', border: '1px solid rgba(0, 242, 254, 0.25)',
+        borderLeft: '4px solid #00f2fe', fontSize: '0.9rem', lineHeight: '1.5'
+      }
+    }, [
+      makeElement('div', { style: { fontSize: '10px', fontWeight: '800', letterSpacing: '0.1em', textTransform: 'uppercase', color: '#00f2fe', marginBottom: '4px' } }, '🧭 At a Glance & What Follows'),
+      makeElement('div', { style: { color: 'var(--text-title, #f8fafc)', marginBottom: '4px' } }, sum.tldr),
+      sum.whatsNext ? makeElement('div', { style: { color: 'var(--text-muted, #94a3b8)', fontSize: '0.82rem', fontStyle: 'italic' } }, `Next: ${sum.whatsNext}`) : null
+    ]);
+  }
 }
 
 window.SituationApp = SituationApp;
