@@ -10,30 +10,45 @@ class ElderAdvocacyPage {
     }
 
     buildElderIntroBlock(app) {
-      const p1 = [
-        "This resource has been compiled to provide a transparent, objective ",
-        "record of recent communication and visitation restrictions surrounding ",
-        "our 94-year-old mother, currently under care in Virginia. It presents ",
-        "a factual timeline of efforts to establish unsupervised video contact ",
-        "and the subsequent legal and ethical guidelines assessed by independent ",
-        "AI models."
-      ].join("");
+          const p1 = [
+            "This resource has been compiled to provide a transparent, objective ",
+            "record of recent communication and visitation restrictions surrounding ",
+            "our 94-year-old mother, currently under care in Virginia. It presents ",
+            "a factual timeline of efforts to establish unsupervised video contact ",
+            "and the subsequent legal and ethical guidelines assessed by independent ",
+            "AI models."
+          ].join("");
 
-      const p2 = [
-        "In order to obtain a fully neutral analysis, the detailed communication ",
-        "history was reviewed under strict legal and caretaking guidelines. This ",
-        "compilation is intended for family legal advisors, medical care coordinates, ",
-        "and financial fiduciaries to ensure transparency and compliance with ",
-        "standard elder care best practices."
-      ].join("");
+          const p2 = [
+            "Therapy-Initiated Virginia Report & Trust Misunderstanding: While in therapy, ",
+            "Rob disclosed that his sister had blocked him from speaking with their ",
+            "94-year-old mother. His therapist stated she was legally required to report ",
+            "that and filed an elder-welfare report with Virginia authorities, who ",
+            "subsequently followed up. Rob wanted to speak candidly with the investigator ",
+            "about how cutting off communication between an elder and her son—preventing him ",
+            "from sharing information about caretaker bias or his career prospects—is ",
+            "treated as improper isolation under California and Virginia standards, yet ",
+            "feared getting into conflict while the family was trying to sort out a trust. ",
+            "Relatives had already reacted angrily to his earlier legal objections as if ",
+            "he were threatening to sue his 94-year-old mother, which was never his intent; ",
+            "his concern was strictly third-party interference blocking direct contact."
+          ].join("");
 
-      return makeElement("div", { className: "backstory-gradient-card p-8 md:p-10 mb-8", "data-block-id": "elder_intro_overview" }, [
-        makeElement("h3", { className: "text-xl font-bold text-[var(--text-title)] mb-4" }, "Overview of Communication & Care Concerns"),
-        makeElement("p", { className: "backstory-paragraph-highlight mb-4 text-base leading-relaxed" }, p1),
-        makeElement("p", { className: "backstory-paragraph text-sm leading-relaxed text-[var(--text-secondary)]" }, p2)
-      ]);
-    }
+          const p3 = [
+            "In order to obtain a fully neutral analysis, the detailed communication ",
+            "history was reviewed under strict legal and caretaking guidelines. This ",
+            "compilation is intended for family legal advisors, medical care coordinators, ",
+            "and financial fiduciaries to ensure transparency and compliance with ",
+            "standard elder care best practices."
+          ].join("");
 
+          return makeElement("div", { className: "backstory-gradient-card p-8 md:p-10 mb-8", "data-block-id": "elder_intro_overview" }, [
+            makeElement("h3", { className: "text-xl font-bold text-[var(--text-title)] mb-4" }, "Overview of Communication, Care Concerns & Virginia Inquiry"),
+            makeElement("p", { "data-editable-text": "true", className: "backstory-paragraph-highlight mb-4 text-base leading-relaxed" }, p1),
+            makeElement("p", { "data-editable-text": "true", className: "backstory-paragraph mb-4 text-sm leading-relaxed text-[var(--text-primary)]" }, p2),
+            makeElement("p", { "data-editable-text": "true", className: "backstory-paragraph text-sm leading-relaxed text-[var(--text-secondary)]" }, p3)
+          ]);
+        }
     buildElderAnalysisCard(title, text, badge) {
       const safeId = title.toLowerCase().replace(/[^a-z0-9]+/g, '_').replace(/^_+|_+$/g, '');
       return makeElement("div", { className: "elder-analysis-card p-6 md:p-8", "data-block-id": `legal_card_${safeId}` }, [
